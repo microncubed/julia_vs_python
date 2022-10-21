@@ -128,7 +128,7 @@ def create_poisson_matrix(nx,ny,Lx,Ly):
     As = As.tocsr()
     return As
 
-def solve_poisson(nx,ny,As,Q_in_flat,cg_solve,tolerance):    
+def solve_poisson(nx,ny,As,Q_in_flat,direct,tolerance):    
     '''
     Solves the Poisson equation directly for the given inputs.
     
@@ -144,9 +144,9 @@ def solve_poisson(nx,ny,As,Q_in_flat,cg_solve,tolerance):
     u np.ndarray: the numerical solution
     '''
     # Perform the numerical solution
-    if cg_solve == False:
+    if direct == True:
         n = spsolve(As,-Q_in_flat)
-    elif cg_solve == True:
+    elif direct == False:
         n,exit_code = cg(As,-Q_in_flat)
     return n
 
